@@ -42,7 +42,7 @@ class SearchMechanism:
         df = pd.DataFrame(columns=['image_path'])
         df_image_embeds = []
 
-        image_files = list(path.iterdir())
+        image_files = [f for f in path.iterdir() if f.suffix.lower() in ['.jpg', '.jpeg', '.png', '.bmp', '.gif', '.webp'] and f.is_file()]
         for i, img_path in tqdm(enumerate(image_files), total=len(image_files)):
             df.loc[i, 'image_path'] = str(img_path)
             df_image_embeds.append(self.clip_searcher.get_image_features(Image.open(img_path)).flatten())
